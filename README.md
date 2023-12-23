@@ -1,0 +1,1 @@
+# Kolay_Sinav_Analizi
