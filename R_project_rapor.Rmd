@@ -1,0 +1,205 @@
+---
+title: 'Kolay Sınav Analizi: R ve Shiny ile Öğrenci Performansının İnteraktif Görselleştirilmesi'
+author: "Özgür ŞEKER"
+date: "2023-25-12"
+output:
+  pdf_document: default
+  html_document: default
+  
+---
+
+## 1. Giriş
+  Bu çalışmada R Studio yardımıyla "Kolay Sınav Analizi" adında basit not listeleri yardımıyla sınav analizi yapan bir Shiny uygulaması inşa edilmiştir. Eğitim dünyasında, öğrenci performansının analizi, öğretim süreçlerini geliştirmek ve öğrenci başarılarını daha iyi anlamak için kritik bir öneme sahiptir. "Kolay Sınav Analizi" uygulamasında, öğrenci isimleri ve sınav notlarından oluşan verileri içeren Excel (.xlsx uzantılı) dosyalarını yükleyerek, bu veriler üzerinde çeşitli analizleri ve görselleştirmeleri gerçekleştirmeye olanak tanıyan bir araç sunar. Bu uygulamayı geliştirmemin temel amacı, eğitimcilerin ve öğrencilerin sınav performansını daha derinlemesine incelemelerine ve bu veriler üzerinden bilinçli kararlar almalarına yardımcı olmaktır. Uygulamanın analizleri, öğrenci başarılarını belirli bir sınav üzerinden değerlendirmenin yanı sıra, sınıf genelindeki eğilimleri ve öğrenci performansının zaman içindeki değişimini görsel olarak takip etme imkânı sunar. Bu makalede, "Kolay Sınav Analizi" uygulamasının temel özelliklerini, Shiny'nin arayüz tasarımı incelenecektir. 
+  Bu uygulama aynı zamanda öğrenci performansını karşılaştırmak ve belirli bir öğrencinin sınav geçmişini incelemek için seçenekler de sunar. Örneğin, belirli bir öğrencinin geçmiş sınav performansını görsel olarak takip etmek için 'Öğrenci Analizi' sekmesini kullanılabilir. Bu özellik, öğrenciye özel stratejiler geliştirmek veya öğretim yöntemlerini kişiselleştirmek isteyen eğitimciler kullanışlı olabilecek bir araçtır.
+
+
+## 2. Shiny Paketi
+  Shiny, R programlama dilinde interaktif web uygulamaları oluşturmak için kullanılan bir pakettir. R kullanıcılarına, veri analizi ve görselleştirme çalışmalarını daha geniş bir kitleyle paylaşma imkânı sunar. Shiny uygulamaları, kullanıcıların grafiklerle etkileşime girebileceği, veri analizini özelleştirebileceği ve sonuçları daha anlamlı bir şekilde keşfetmelerine olanak tanıyan kullanıcı arayüzleri içerir. Görsel 1 ve Görsel 2' de Shiny uygulama kod alanına giriş yapmak için kullanılabilecek menüler verilmektedir.
+  
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{shinycreateanother.jpg}
+  
+  \textbf{Görsel 1:} Shiny Uygulaması Açılıışı 
+\end{center}
+
+\begin{center}
+  \includegraphics[width=0.6\linewidth]{shinycreate.jpg}
+  
+  \textbf{Görsel 2:} Shiny Uygulaması Açılıışı 
+\end{center}
+
+  
+
+## 3. R ile Entegrasyon 
+  Shiny, R dilinin doğrudan bir uzantısıdır ve R kodunu interaktif web uygulamalarına dönüştürmek için özel olarak tasarlanmıştır. R programlama dili, veri analizi ve istatistiksel hesaplamalar için oldukça güçlü bir araç olmasına rağmen, Shiny sayesinde bu analizleri daha geniş bir kitleyle paylaşmak ve etkileşimli hale getirmek mümkün hale gelir.Görsel 3'te verilen çalışma prensibi Shiny uygulamalarının temelinde iki ana unsura dayanır. Bunlar ui. R ve server. R adında kod parçalarından oluşan dosyalardır.
+
+\begin{center}
+  \includegraphics[width=0.5\linewidth]{shinyiskelet.jpg}
+  
+  \textbf{Görsel 3:} Shiny Çalışma Prensibi 
+\end{center}
+
+## *ui. R (Kullanıcı Arayüzü)* 
+  ui.R (Kullanıcı Arayüzü) dosyası uygulamanın kullanıcı arayüzünü tanımlar. Kullanıcıya gösterilen görsel öğeleri, giriş formlarını ve diğer etkileşimli bileşenleri içeren ögeler Görsel 4'te verilmektedir. Bu ögeler *Sekme Düzenleme, Grafik, Buton ve Metin* ekleme bölümünde detaylandırılacaktır.
+
+\begin{center}
+  \includegraphics[width=0.6\linewidth]{ui_kod_parcasi.jpg}
+  
+  \textbf{Görsel 4:} Kullanıcı Arayüzü (ui.R)
+\end{center}
+
+
+## *server. R (Sunucu)* 
+  server. R (Sunucu), kullanıcının uygulama üzerindeki etkileşimlerine nasıl tepki verileceğini belirtir. R kodunu içerir ve kullanıcının seçimlerine göre veri manipülasyonu, analiz ve sonuçların güncellenmesini sağlar.Shiny uygulamaları, ui (kullanıcı arayüzü)  ve Görsel 5'te genel yapısı verilen server (sunucu) tarafının etkileşimli bir şekilde çalışmasıyla, gerçek zamanlı analiz ve görselleştirmeleri mümkün kılar. Bu sayede, kullanıcılar basit bir web tarayıcısı üzerinden veri analizi yapabilir ve sonuçları hemen görebilirler.
+
+\begin{center}
+  \includegraphics[width=0.65\linewidth]{server_kod_parcasi.jpg}
+  
+  \textbf{Görsel 5:} Sunucu (server.R)
+\end{center}
+
+## *Sekme Düzenleme, Grafik, Buton ve Metin ekleme* 
+Kullanıcı arayüzü (ui) fonksiyonunun fluidpage altındaki main panel altında yer alan sekme paneli (tab panel) uygulamanın içerik başlıklarının yer aldığı bölümdür.  Bu bölümde sekmelerin her birinin temelleri atılır. Butonların sayfadaki yerleri de bu bölümde yer alır. Görsel 6'da "Sınıfın Sütun Grafikleri" sekmesinin kod temeli verilmektedir.
+
+\begin{center}
+  \includegraphics[width=0.8\linewidth]{uitabpanel.jpg}
+  
+  \textbf{Görsel 6:} ui tab panel yapısı
+\end{center}
+
+Bu kod parçası, "Sınıfın Sütun Grafikleri" adlı bir sekme paneli oluşturur. Bu panelde, bir sütun grafiği ve bu grafiğin altında bir metin çıktısı, bir bilgilendirme düğmesi ve bir grafik indirme düğmesi bulunmaktadır. **fluidRow** fonksiyonu, sayfa genişliğine uyumlu bir satır oluşturur. Bu satırın içindeki **column** fonksiyonları, belirli genişlikte sütunlar oluşturur. Örneğin, column(8, plotOutput("sutun_grafigi")) kodu, genişliği 8 birim olan bir sütun oluşturur ve bu sütun içinde "sutun_grafigi" adında bir çizim çıktısı bulunur. Benzer şekilde, diğer column fonksiyonları da farklı öğeleri içeren sütunlar oluşturur.
+ 
+server. R dosyasının fonksiyon yapısının hemen altında yer alan ilk bileşeni Görsel 7'de verilen  kullanıcının etkileşimi ile uygulamaya yüklenen dosyayı dinamik bir şekilde işleyen reactive fonksiyonudur.
+
+\begin{center}
+  \includegraphics[width=0.65\linewidth]{serververigirisi.jpg}
+  
+  \textbf{Görsel 7:} Server veri girişi yapısı
+\end{center}
+
+Bu bölümün temel bileşenleri aşağıda kısaca açıklanmıştır.
+ 
+ **input**: Kullanıcı arayüzünden gelen veri ve etkileşimleri içeren listeye benzer bir nesnedir. Kullanıcının arayüzde gerçekleştirdiği etkileşimleri **izlemek** ve bu etkileşimlere **yanıt vermek** için kullanılır. 
+ 
+ **output**: Kullanıcı arayüzüne gönderilen çıktıları ve görselleştirmeleri içeren liste benzeri nesnedir. Bu nesne üzerinden kullanıcı arayüzündeki çeşitli bileşenlere **veri** gönderilir. 
+ 
+ **session**: Shiny uygulamasının çalışma oturumunu temsil eden bir nesnedir. Genellikle daha gelişmiş kullanım durumları (daha fazla kontrol ve özelleştirme sağlama) için kullanılır. 
+  Bu bölüm Görsel 8'de bir grafiğin kod yapısı ile detaylandırılmaktadır.
+ 
+## *Sütun grafiği kod yapısı* 
+
+ "Kolay Sınav Analizi" uygulamasının "Sınıfın Sütun Grafikleri" sekmesinin ilk grafiği olan sütun grafiğinin kod yapısı Görsel 8' de verilmektedir. Bu yapıda R kodları yer almaktadır. Bir veri seti yardımıyla R da sütun grafiği elde etmek mümkündür. Burada aynı işlem yapılmaktadır. Tek fark veri seti reactive yapısı ile kullanıcı tarafından sağlanmakta ve dinamik şekilde grafiklerin çiziminde rol oynamaktadır. Elbette grafiklerin 0 (sıfır) ile 100 arasında puanlanan bir sınavda eksenlerinden birinin maksimum noktasının 100 olacağı ve diğer ekseninde öğrenci isimlerinin olacağı açıktır. Dolayısıyla görselleştirmeyi ayrıntılı hale getirmek için düşey eksenin limiti 110 da tutulmuştur. Sütunun üzerinde yer alan not değerinin kullanıcı tarafından rahat okunması amaçlanmaktadır.
+ 
+ 
+ 
+\begin{center}
+  \includegraphics[width=0.9\linewidth]{sutungrafigi.jpg}
+  
+  \textbf{Görsel 8:} Grafik yapısı
+\end{center}
+
+ Eksen etiketleri ve Grafik isimleri tüm grafiklerde mevcuttur. Kullanıcının sidebar Panelde yer alan "Sınıfı Giriniz" bölümüne analizi yapılacak sınıf bilgisi girilirse grafik isimlerinde eş zamanlı değişim olmaktadır. Bur menülerde okul türlerindeki farklılıklardan dolayı "Dropdown Menu" tercih edilmemiştir. Açık uçlu giriş hücreleri kullanılmıştır.
+
+
+## 4. Uygulama Hakkında Detaylar
+
+"Kolay Sınav Analizi Uygulaması" geleneksel bir Shiny uygulumasının karakteristik tüm özelliklerini taşımaktadır. Kullanıcıların herhangi bir eğitime ihtiyaç duymadan sadece analiz etmek için bir dosya yüklemeleri yeterlidir. Uygulama gerekli analizleri yapar. Kullanıcı amacına uygun olarak dilediği görselleştirmeyi cihazına kaydedebilir.
+
+### *Veri Yükleme ve Türleri* 
+
+ "Kolay Sınav Analizi Uygulaması", öğrenci isimleri ve sınav notlarından oluşan verileri içeren Excel (.xlsx uzantılı)  dosyalarını yüklemek için kullanıcıya olanak tanır. Görsel 9'da verilen kullanıcı dostu menü sayesinde kullanıcı tarafından uygulamaya aktarılan ham dosyalar, uygulama tarafından işlenir ve analiz edilir. Uygulama, özellikle eğitim sektöründeki öğrenci performansının takibi için tasarlandığından, notlar ve öğrenci bilgileri üzerinde odaklanmaktadır.
+
+\begin{center}
+  \includegraphics[width=0.55\linewidth]{dosyayukleme.jpg}
+  
+  \textbf{Görsel 9:} Veri Yükleme
+\end{center}
+
+
+### *Analiz ve İstatistiksel Hesaplamalar* 
+ Uygulama genel anlamda 3 sütundan ve 40 satırdan oluşan bir .xlsx uzantılı bir Excel dosyasını kabul eder. Uygulamanın eğitim sektöründeki kuruluşların altyapılarında kullandığı dosyalardaki çeşitlidir. Bundan dolayı kullanıcıdan ham verilerini 3 sütun ve 40 satırdan oluşan bir Excel dosyasında düzenleyip uygulamaya aktarmaları beklenir. Uygulama ilk sütunda öğrenci isimlerini, ikinci sütunda 1. sınav notlarını ve üçüncü sütunda 2. sınav notlarını içeren dosyayı analiz edebilir.
+ Uygulama, yüklenen verilere çeşitli analizler uygulayarak öğrenci performansının derinlemesine incelenmesine olanak tanır. Bu analiz sekmeleri Görsel 10'da Sınıfın Sütun Grafikleri, Sınıfın Nokta Grafikleri, Sınıfın Not Fişi, Öğrenci Analizi ve Meraklısına başlıkları ile gösterilmektedir.
+ 
+ \begin{center}
+  \includegraphics[width=0.9\linewidth]{sekmeler.jpg}
+  
+  \textbf{Görsel 10:} Sekmeler
+\end{center}
+
+ Uygulama, sınıf genelindeki not ortalamasını ve notların dağılımını görselleştirerek sınıfın genel başarı düzeyini anlaşılmasına yardımcı olur. Öğrenci Bazlı Analizler: Kullanıcılar, belirli bir öğrencinin sınav geçmişini görsel olarak inceleyebilir. Bu, öğrenciye özgü performans eğilimleri, güçlü ve zayıf yönlerin belirlenmesi için önemlidir. Zaman İçindeki Değişim Analizleri: Uygulama, sınav notlarının zaman içindeki değişimini gösteren trend analizleri Sınıfın Sütun Grafikleri, Sınıfın Nokta Grafikleri bölümlerinde sunmaktadır. Bu bölümler, eğitimcilerin öğrenci gelişimini izlemelerine ve müfredat stratejilerini uyarlamalarına yardımcı olur.
+ 
+
+### *Görselleştirmeler ve Grafikler*
+
+ "Kolay Sınav Analizi" uygulaması, Görsel 11' de verilen "Meraklısına" bölümünde çeşitli grafik ve görselleştirmelerle veri analizini destekler. Bu görselleştirmeler şunları içerir: Lolipop Grafiği, Kümeleme Analizi, Pasta Grafiği, Isı Haritası, Balon Grafiği, Renkli Sütunlar, Yığılmış Sütunlar ve Donut Grafiği sekmeleri sınav notlarının dağılımını ve istatistiksel özelliklerini anlamak için kullanılır. 
+ 
+ \begin{center}
+  \includegraphics[width=0.8\linewidth]{meraklisina.jpg}
+  
+  \textbf{Görsel 11:} Meraklısına
+\end{center}
+
+ Kümeleme Analizi grafiği ile başarılı ve başarısız öğrenci grupları vurgulanmaktadır. Lolipop Grafiği ve Isı haritası ile not ortalamalarının özeti ve genel dağılımı gözlemlenebilir. Yığılmış sütunlar ve Renkli Sütunlar ile birinci ve ikinci sınavlar arasındaki öğrenci performansları karşılaştırılabilir. Donut Grafiği ile öğrenci bazında detaylı bir inceleme yapmak için tercih edilebilir. Meraklısına bölümünün uygulama içine konmasının öne çıkan nedenlerinden biri de sınav analizi yapmak isteyen eğitimcinin istatistiksel okuryazarlığına katkı sunmaktır. Kullanıcıya daha önce tecrübe etmediği düşünülen grafik türleri yardımıyla veri görselleştirmeyi deneyimleme şansı verilmektedir. Görsel 12 de verilen Balon Grafiği çıktısı da detaylı analizleri tek pencerede sunmaktadır.
+
+
+
+
+\begin{center}
+  \includegraphics[width=0.8\linewidth]{balon.jpg}
+  
+  \textbf{Görsel 12:} Balon Grafiği
+\end{center}
+
+ Uygulamaya yüklenen veri setindeki öğrenci isimleri ve notları "Sınıfın Not Fişi" sekmesinde library(DT) kütüphanesi "datatable" fonksiyonu yardımıyla elde edilmektedir. Özellikle büyük veri setlerinde bu fonksiyonun Görsel 13'te verilen arama çubuğuna büyük veri setlerinde istenen gözlemin etiketi yazılarak kısa sürede ulaşılabilir.
+ 
+ \begin{center}
+  \includegraphics[width=0.8\linewidth]{dt_search.jpg}
+  
+  \textbf{Görsel 13:} Sınıfın Not Fişi "Search" aracı
+\end{center}
+ 
+
+
+
+
+
+
+## 5. Kullanıcı Arayüzü 
+ "Kolay Sınav Analizi" uygulaması, Shiny'nin güçlü araçlarını kullanarak arayüz tasarımı sunmaktadır. Bu, kullanıcıların veri analizini ve görselleştirmeyi kolayca anlamalarına ve özelleştirmelerine olanak tanıyan bir deneyim sağlamaktadır.
+ 
+\begin{center}
+  \includegraphics[width=1\linewidth]{uygulama.jpg}
+  
+  \textbf{Görsel 14:} Uygulama
+\end{center}
+
+
+ 
+
+### *Kolay Veri Yükleme ve Seçim Uygulama* 
+ Kullanıcıların Excel dosyalarını kolayca yüklemelerine ve analiz için kullanılacak öğrenci bilgilerini seçmelerine olanak tanır. Arayüz, dosya yükleme butonları ve sezgisel seçim menüleri ile kullanıcıların hızlı bir şekilde başlamalarını sağlar.
+
+### *Grafik ve Görselleştirmelerde Esneklik* 
+ Kullanıcılar, grafikler üzerine tıklayarak belirli bir sınavın veya öğrenci grubunun detaylı analizini görebilirler. Ayrıca, sınav notlarındaki belirli bir aralığı vurgulamak veya grafikleri özelleştirmek için interaktif kontrolleri kullanabilirler. Bu esneklik, kullanıcıların veriyi daha derinlemesine keşfetmelerini sağlar.
+
+### *Filtreleme Seçenekleri* 
+ Arayüzde bulunan filtreleme seçenekleri, kullanıcıların belirli bir sınav, öğrenci veya zaman dilimine odaklanmalarını sağlar. Bu özellik, eğitimcilerin belirli bir alt küme üzerinde daha detaylı analizler yapmalarına olanak tanır.
+
+### *Anında Güncellemeler* 
+ Kullanıcıların herhangi bir seçim (sınıf adını veya öğrenci adını değiştirdiklerinde) yaptıklarında grafikler ve analizler anında güncellenir. Bu, kullanıcıların yapılan değişikliklerin hemen etkisini görmelerini sağlar ve gerçek zamanlı bir analiz deneyimi sunar. 
+
+### *Kullanıcı Geri Bildirimi ve Yardım Düğmeleri* 
+ Arayüzde, kullanıcılara yardımcı olmak için bilgi düğmeleri ve yardım metinleri bulunur. Kullanıcılar, belirli bir özellik veya grafik hakkında daha fazla bilgi almak için bu düğmelere tıklayabilirler.
+ 
+## 6. Geri Bildirim ve İlerleme
+ "Kolay Sınav Analizi" uygulamasının gelişimi, kullanıcı geri bildirimlerine dayalı bir süreçle şekillenmektedir. Kullanıcılarımızın deneyimlerini daha iyi anlamak ve uygulamamızı sürekli olarak geliştirmek için çeşitli kanallar aracılığıyla geri bildirim toplanmaktadır. 
+
+### *Geri Bildirim Butonu ve İrtibat E-postası*
+ Uygulamaya eklenen geri bildirim butonu, kullanıcıların doğrudan uygulama içindeki deneyimleri hakkında geri bildirimde bulunmalarını sağlar. Ayrıca, iletişim kurmak veya sorularını iletmek isteyen kullanıcılar için bir irtibat e-posta adresi sağlanmaktadır. Bu, kullanıcıların her türlü geri bildirimi paylaşmalarını kolaylaştırmaktadır.
+
+## 7. Sonuç
+ Bu Shiny tabanlı uygulama, eğitim dünyasındaki veri analizi ihtiyaçlarına hızlı ve etkili bir çözüm sunmayı amaçlamaktadır. Kullanıcı dostu arayüzü sayesinde uygulama, Shiny'nin güçlü araçlarıyla birleşerek, kullanıcıların veri analizi yapma sürecini basitleştiren ve anlamalarını kolaylaştırabilir. Performans optimizasyonu sayesinde, kullanıcılar büyük veri setleri üzerinde hızlı ve güvenli analizler yapabilirler. Uygulama, çeşitli analiz seçenekleri ve görselleştirme araçları ile kullanıcıların veriyi esnek bir şekilde keşfetmelerine olanak tanımaktadır. Özel filtreleme ve sıralama seçenekleri, kullanıcıların ihtiyaçlarına göre analiz yapma imkânı sağlar. Kullanıcı geri bildirimleri ve ihtiyaç analizleri sayesinde uygulamanın geliştirilmesi beklenmektedir. Bazı özellikler arasında daha kapsamlı analiz araçları, sınavların madde analizini yapabilen sekmeler, özelleştirilebilir raporlama seçenekleri ve mobil uygulama sürümleri uygulamanın geliştirilecek yönleri olarak sayılabilir.
+
+## 8.Kaynaklar
+
+Kasprzak, P., Mitchell, L., Kravchuk, O., & Timmins, A. (2021). Six Years of Shiny in Research--Collaborative Development of Web Tools in R. arXiv preprint arXiv:2101.10948.
